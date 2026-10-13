@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>8-sinf Fizika — II chorak</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141829; --bg-2:#1c2138; --panel:#1f253f; --panel-2:#262d4c;
+  --ink:#EDE8DC; --dim:#B9B6C8; --line:#363c5c;
+  --amber:#F2A93B; --teal:#59D6C4; --teal-deep:#2F9E8F; --violet:#A78BFA; --danger:#E8735F;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);
+  background-image:radial-gradient(circle at 10% 0%,rgba(242,169,59,.08),transparent 40%),radial-gradient(circle at 90% 10%,rgba(167,139,250,.1),transparent 45%);
+  color:var(--ink);font-family:'Manrope',sans-serif;line-height:1.65}
+h1,h2{font-family:'Fraunces',serif;font-weight:600;margin:0 0 .4em;color:#FBF7EE}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 80px}
+.hero{padding:48px 20px 36px;border-bottom:1px solid var(--line)}
+.hero .kicker{color:var(--amber);font-family:'Fraunces',serif;font-style:italic;margin-bottom:8px}
+.hero h1{font-size:clamp(1.8rem,6vw,2.6rem)}
+.hero p{color:var(--dim);max-width:48ch}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+.num{font-family:'Fraunces',serif;font-style:italic;color:var(--dim);font-size:.9rem;margin-bottom:4px}
+section h2{font-size:clamp(1.25rem,4vw,1.55rem)}
+.lead{color:var(--dim);max-width:65ch;font-size:.97rem;margin-bottom:10px}
+.more{color:var(--dim);max-width:65ch;font-size:.93rem;background:var(--panel);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;padding:12px 16px;margin:12px 0}
+.more b{color:#FBF7EE}
+.term{background:rgba(242,169,59,.14);border-bottom:2px solid var(--amber);color:#FBF7EE;padding:0 3px;border-radius:3px;font-weight:600}
+.term.c{background:rgba(89,214,196,.14);border-bottom:2px solid var(--teal)}
+.term.v{background:rgba(167,139,250,.16);border-bottom:2px solid var(--violet)}
+.example-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0 4px}
+.example{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:.87rem;color:var(--dim)}
+.example strong{color:var(--ink);display:block;font-size:.9rem;margin-bottom:2px}
+.sim{margin-top:16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.sim-head{display:flex;justify-content:space-between;align-items:center;padding:11px 15px;border-bottom:1px solid var(--line);background:var(--panel-2);font-size:.8rem;color:var(--dim)}
+.sim-head strong{color:var(--ink);font-size:.86rem}
+.sim-body{padding:15px}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.chip{font-family:'Manrope',sans-serif;font-weight:600;font-size:.8rem;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--dim);cursor:pointer;transition:.15s}
+.chip:hover{border-color:var(--amber);color:var(--ink)}
+.chip.active{background:var(--amber);border-color:var(--amber);color:#1a1204}
+.detail{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:.88rem;color:var(--dim);min-height:50px}
+.detail b{color:#FBF7EE}
+canvas{display:block;width:100%;height:auto;background:var(--bg-2);border-radius:10px;touch-action:none}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.calc-field label{display:block;font-size:.78rem;color:var(--dim);margin-bottom:5px}
+.calc-field input[type=range]{width:100%;accent-color:var(--amber)}
+.calc-field .val{font-weight:700;color:var(--amber)}
+.calc-result{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.95rem;text-align:center;margin-bottom:10px}
+.calc-result .f{font-family:'Fraunces',serif;font-size:1.1rem;color:var(--teal)}
+.quiz-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:9px}
+.quiz-card p.q{font-weight:700;color:#FBF7EE;margin:0 0 7px;font-size:.88rem}
+.opt{display:block;width:100%;text-align:left;background:var(--bg-2);border:1px solid var(--line);color:var(--ink);padding:7px 11px;border-radius:7px;margin-bottom:5px;cursor:pointer;font-size:.84rem}
+.opt:hover{border-color:var(--amber)}
+.opt.correct{background:rgba(89,214,196,.18);border-color:var(--teal)}
+.opt.wrong{background:rgba(232,115,95,.16);border-color:var(--danger)}
+.keypoints{margin:12px 0 0;padding-left:18px;color:var(--dim);font-size:.89rem}
+.keypoints li{margin-bottom:6px}
+.note{margin-top:12px;background:var(--panel);border-left:3px solid var(--violet);border-radius:0 10px 10px 0;padding:10px 14px}
+.note .tag{font-size:.7rem;font-weight:800;letter-spacing:.03em;color:var(--violet);margin-bottom:3px}
+.note p{margin:0;font-size:.87rem;color:var(--dim)}
+footer{text-align:center;color:var(--dim);font-size:.8rem;padding:34px 20px 10px}
+</style>
+</head>
+<body>
+<div class="hero"><div class="wrap" style="padding:0">
+  <div class="kicker">8-sinf · Fizika · II chorak</div>
+  <h1>Zanjirlar, ulanishlar va sig'im</h1>
+  <p>Om qonunidan boshlab, ketma-ket va parallel ulanishlar, hamda kondensatorlarning elektr sig'imigacha — 9 ta mavzu, har biri batafsil tushuntirish va interaktiv mashq bilan.</p>
+</div></div>
+<div class="wrap">
+
+<section><div class="num">1-mavzu</div><h2>Zanjirning bir qismi uchun Om qonuni</h2>
+<p class="lead"><span class="term">Om qonuni</span> — elektrotexnikaning asosiy qonunlaridan biri bo'lib, zanjir qismidagi tok kuchi (I) shu qismga qo'yilgan kuchlanishga (U) to'g'ri proporsional va uning qarshiligiga (R) teskari proporsional ekanini ko'rsatadi: <span class="term">I = U / R</span>.</p>
+<ul class="keypoints">
+  <li>Formulani boshqacha shaklda ham yozish mumkin: U = I·R yoki R = U/I — qaysi kattalik noma'lum bo'lsa, shuni topish uchun</li>
+  <li>Om qonuni faqat qarshiligi o'zgarmas (haroratga bog'liq bo'lmagan) o'tkazgichlar uchun to'g'ri bajariladi</li>
+  <li>Bu qonunni nemis fizigi Georg Om 1826-yilda kashf etgan</li>
+</ul>
+<div class="more">Bu qonunni 1826-yilda nemis fizigi <b>Georg Om</b> tajribalar orqali kashf etgan. Qonun amaliyotda juda muhim: masalan, agar siz kuchlanishni bilsangiz va qarshilikni o'lchasangiz, zanjirdagi tok kuchini hisoblash orqali topishingiz mumkin — bu elektr asboblarini loyihalashda doimo qo'llaniladi. Qarshilik qancha katta bo'lsa, tok kuchi shuncha kichik bo'ladi — xuddi ingichka quvurdan suv kam oqishi kabi.</div>
+<div class="example-row">
+  <div class="example"><strong>Kuchlanish (U)</strong>Voltda (V) o'lchanadi — "itaruvchi kuch"</div>
+  <div class="example"><strong>Tok kuchi (I)</strong>Amperda (A) o'lchanadi — "oqim miqdori"</div>
+  <div class="example"><strong>Qarshilik (R)</strong>Omda (Ω) o'lchanadi — "to'siq"</div>
+</div>
+<div class="sim"><div class="sim-head"><strong>Om qonuni kalkulyatori</strong><span>I = U / R</span></div><div class="sim-body">
+<div class="calc-grid">
+  <div class="calc-field"><label>Kuchlanish, U = <span class="val" id="uVal">12</span> V</label><input type="range" id="uSlider" min="1" max="24" value="12"></div>
+  <div class="calc-field"><label>Qarshilik, R = <span class="val" id="rVal">6</span> Ω</label><input type="range" id="rSlider" min="1" max="24" value="6"></div>
+</div>
+<div class="calc-result"><span class="f">I = U / R = <span id="iResult">2.0</span> A</span></div>
+<div class="detail" id="ohmDetail"></div>
+</div></div></section>
+
+<section><div class="num">2-mavzu</div><h2>Laboratoriya ishi-2: Om qonunini o'rganish</h2>
+<p class="lead">Bu laboratoriya ishida o'quvchi turli kuchlanish qiymatlarida tok kuchini o'lchab, natijalar asosida <span class="term c">U–I grafigi</span>ni quradi. Agar qarshilik o'zgarmas bo'lsa, bu grafik — to'g'ri chiziq bo'ladi.</p>
+<ul class="keypoints">
+  <li>Grafikning og'ish burchagi (qiyaligi) qarshilikka bog'liq — qiyalik qancha katta bo'lsa, qarshilik shuncha kichik</li>
+  <li>Bir nechta rezistor uchun grafiklarni solishtirib, qaysi birining qarshiligi kattaroq ekanini vizual aniqlash mumkin</li>
+  <li>Bu — Om qonunini nazariy emas, amaliy tarzda tasdiqlash usuli</li>
+</ul>
+<div class="more">Grafikning qiyaligi (burchagi) aynan qarshilikka teng: qiyalik qancha katta bo'lsa, qarshilik ham shuncha katta. Bu usul — fizikada <b>eksperimental tasdiqlash</b> deb ataladi: nazariy formulani amaliy o'lchovlar bilan tekshirish. O'quvchilar kuchlanish manbaini bir necha marta o'zgartirib, har safar ampermetr ko'rsatkichini qayd etishadi, so'ng natijalarni jadvalga kiritib, grafik chizishadi.</div>
+<div class="sim"><div class="sim-head"><strong>U–I grafigini chizish</strong><span>Nuqtani bosing</span></div><div class="sim-body">
+<canvas id="graphCanvas" width="640" height="280"></canvas>
+<div class="chip-row" style="margin-top:10px"><button class="chip" id="graphReset">Grafikni tozalash</button></div>
+</div></div></section>
+
+<section><div class="num">3-mavzu</div><h2>Amaliy mashg'ulot-1: Reostat yordamida tok kuchini rostlash</h2>
+<p class="lead"><span class="term">Reostat</span> — zanjirga ketma-ket ulanadigan, qarshiligini qo'lda o'zgartirish mumkin bo'lgan qurilma. U orqali zanjirdagi tok kuchini kamaytirish yoki oshirish mumkin.</p>
+<ul class="keypoints">
+  <li>Reostat ichida uzun sim spiral shaklida o'ralgan bo'lib, sirg'anuvchi kontakt sim bo'ylab harakatlanadi</li>
+  <li>Kontakt qancha uzoqqa surilsa, zanjirga ulangan sim qismi shuncha uzun — demak, qarshilik shuncha katta</li>
+  <li>Amaliyotda lampalarning yorqinligini yoki motorning tezligini rostlashda qo'llaniladi</li>
+</ul>
+<div class="more">Reostatning ichida uzun simli chulg'am bor, surgich (polzunok) shu chulg'am bo'ylab harakatlanadi — surgich qancha uzoqroq joyga surilsa, tok shuncha uzun yo'l bosib o'tadi va qarshilik ortadi. Reostatlar amaliyotda yorug'lik kuchini (lampalar yorqinligini) yoki motor tezligini rostlashda ishlatiladi — masalan, eski turdagi ventilyator tezligini sozlagichlar aynan shu prinsipda ishlaydi.</div>
+<div class="sim"><div class="sim-head"><strong>Reostat bilan yorug'lik rostlash</strong><span>Slayderni harakatlantiring</span></div><div class="sim-body">
+<canvas id="rheoCanvas" width="640" height="160"></canvas>
+<input type="range" id="rheoSlider" min="5" max="100" value="30" style="width:100%;accent-color:var(--amber)">
+</div></div></section>
+
+<section><div class="num">4-mavzu</div><h2>Iste'molchilarni ketma-ket ulash</h2>
+<p class="lead"><span class="term">Ketma-ket ulanish</span>da barcha elementlar bir yo'l bo'ylab birin-ketin ulanadi — tok uchun faqat bitta yo'l mavjud. Umumiy qarshilik: <span class="term">R = R₁ + R₂ + ...</span>, tok kuchi esa hamma joyda bir xil.</p>
+<ul class="keypoints">
+  <li>Agar bitta element (masalan, lampochka) kuysa, butun zanjir ishlashdan to'xtaydi — chunki tok uchun boshqa yo'l yo'q</li>
+  <li>Umumiy qarshilik har doim eng katta alohida qarshilikdan ham kattaroq bo'ladi</li>
+  <li>Yangi yil chiroqlarining eski turlarida bitta lampochka kuysa, hammasi o'chib qolishi shu sababdan</li>
+</ul>
+<div class="more">Ketma-ket ulanishning muhim xususiyati: agar zanjirning biror qismi uzilsa (masalan, bitta lampochka kuysa), butun zanjir ishlamay qoladi — chunki tok uchun boshqa yo'l yo'q. Bu — Yangi yil archasi chiroqlarining eski turlarida ko'p uchraydi: bitta lampochka kuysa, hammasi o'chadi. Ketma-ket ulanishda kuchlanish har bir elementga bo'linib taqsimlanadi: U = U₁ + U₂ + ...</div>
+<div class="sim"><div class="sim-head"><strong>Ketma-ket zanjir</strong><span>Rezistorlar soni</span></div><div class="sim-body">
+<div class="chip-row"><button class="chip active" data-n="2">2 ta</button><button class="chip" data-n="3">3 ta</button><button class="chip" data-n="4">4 ta</button></div>
+<canvas id="seriesCanvas" width="640" height="150"></canvas>
+<div class="detail" id="seriesDetail"></div>
+</div></div></section>
+
+<section><div class="num">5-mavzu</div><h2>Iste'molchilarni parallel ulash</h2>
+<p class="lead"><span class="term c">Parallel ulanish</span>da elementlar bir-biriga mustaqil "shoxchalar" sifatida ulanadi — tok uchun bir nechta yo'l mavjud. Umumiy qarshilik formulasi: <span class="term c">1/R = 1/R₁ + 1/R₂ + ...</span>, kuchlanish esa hamma shoxchada bir xil.</p>
+<ul class="keypoints">
+  <li>Agar bitta element ishdan chiqsa, qolganlari ishlashda davom etadi — chunki tok uchun boshqa yo'llar bor</li>
+  <li>Umumiy qarshilik har doim eng kichik alohida qarshilikdan ham kichikroq bo'ladi</li>
+  <li>Shu sababli uy-joy elektr tarmog'ida rozetka va chiroqlar parallel ulanadi</li>
+</ul>
+<div class="more">Parallel ulanishning afzalligi: agar bitta element ishdan chiqsa, qolganlari ishlashda davom etadi — chunki tok uchun boshqa yo'llar bor. Aynan shu sababli uy-joylardagi elektr rozetkalari va chiroqlar parallel ulanadi: bitta xona chirog'i kuysa, boshqa xonalardagi chiroqlar yonishda davom etadi. Parallel ulanishda umumiy qarshilik har doim eng kichik qarshilikdan ham kichikroq bo'ladi — chunki tok uchun ko'proq yo'l ochiladi.</div>
+<div class="sim"><div class="sim-head"><strong>Parallel zanjir</strong><span>Rezistorlar soni</span></div><div class="sim-body">
+<div class="chip-row"><button class="chip active" data-pn="2">2 ta</button><button class="chip" data-pn="3">3 ta</button></div>
+<canvas id="parallelCanvas" width="640" height="180"></canvas>
+<div class="detail" id="parallelDetail"></div>
+</div></div></section>
+
+<section><div class="num">6-mavzu</div><h2>Amaliy mashg'ulot-2: Tok manbalarini ulash</h2>
+<p class="lead">Bir nechta batareyani <span class="term">ketma-ket</span> ulasak, umumiy EYUK (elektr yurituvchi kuch) ortadi; <span class="term c">parallel</span> ulasak, umumiy EYUK o'zgarmaydi, lekin batareyaning "ishlash muddati" (sig'imi) ortadi.</p>
+<ul class="keypoints">
+  <li>Ketma-ket ulash: ikkita 1,5V batareya birgalikda 3V beradi — pultlarda shu usul qo'llaniladi</li>
+  <li>Parallel ulash: ikkita 1,5V batareya baribir 1,5V beradi, lekin 2 marta uzoqroq ishlaydi</li>
+  <li>Ulanish turini tanlash kerakli kuchlanish yoki ishlash muddatiga qarab belgilanadi</li>
+</ul>
+<div class="more">Pult yoki fonarda ikkita 1,5 voltli batareyani ketma-ket qo'yganimizda, umumiy kuchlanish 3 voltga teng bo'ladi — shuning uchun fonarlarda batareyalar odatda bir chiziqda, "+" va "−" qutblari navbat bilan ulangan holda joylashtiriladi. Parallel ulash esa katta quvvat talab qiladigan uzoq muddatli qurilmalarda (masalan, quyosh panellari tizimida) qo'llaniladi.</div>
+<div class="sim"><div class="sim-head"><strong>Batareyalarni ulash</strong><span>Turini tanlang</span></div><div class="sim-body">
+<div class="chip-row"><button class="chip active" data-bt="series">Ketma-ket</button><button class="chip" data-bt="parallel">Parallel</button></div>
+<div class="detail" id="battDetail"></div>
+</div></div></section>
+
+<section><div class="num">7-mavzu</div><h2>Laboratoriya ishi-3: O'tkazgichlarni ketma-ket va parallel ulanishini o'rganish</h2>
+<p class="lead">Bu amaliy ishda ikkala ulanish turi solishtiriladi: bir xil rezistorlarni ketma-ket va parallel ulab, umumiy qarshilikni o'lchash va formulalar bilan solishtirish.</p>
+<ul class="keypoints">
+  <li>Amaliy natija nazariy formula bilan solishtirilib, formulaning to'g'riligi tasdiqlanadi</li>
+  <li>Ikkala usulda ham xato manbalari (simlar qarshiligi, o'lchov asboblari aniqligi) hisobga olinadi</li>
+  <li>Natijalar jadvalga kiritilib, umumiy xulosa chiqariladi</li>
+</ul>
+<div class="more">Masalan, ikkita bir xil 10 Ω li rezistorni ketma-ket ulasak, umumiy qarshilik 20 Ω bo'ladi (ikki barobar ortadi), parallel ulasak esa 5 Ω bo'ladi (ikki barobar kamayadi). Bu tajriba o'quvchiga ulanish turi umumiy qarshilikka qanday tubdan farqli ta'sir qilishini aniq ko'rsatadi — nazariy formulalar amaliy o'lchov bilan tasdiqlanadi.</div>
+<div class="sim"><div class="sim-head"><strong>Solishtirish</strong><span>Ikkita 10 Ω rezistor</span></div><div class="sim-body">
+<div class="detail"><b>Ketma-ket:</b> R = 10 + 10 = <b style="color:var(--teal)">20 Ω</b><br><b>Parallel:</b> 1/R = 1/10 + 1/10 → R = <b style="color:var(--teal)">5 Ω</b></div>
+</div></div></section>
+
+<section><div class="num">8-mavzu</div><h2>Elektr sig'imi. Kondensatorlar</h2>
+<p class="lead"><span class="term v">Kondensator</span> — elektr zaryadini vaqtincha saqlab turuvchi qurilma. Uning <span class="term v">sig'imi (C)</span> farad (F) birligida o'lchanadi va C = q/U formulasi bilan aniqlanadi.</p>
+<ul class="keypoints">
+  <li>Kondensator ikki metall plastinkadan iborat bo'lib, ular orasida izolyator (dielektrik) joylashgan</li>
+  <li>Zaryadlanganda bir plastinkada musbat, ikkinchisida manfiy zaryad to'planadi</li>
+  <li>Qo'llanilishi: fotoapparat chaqnashi, kompyuter xotirasi, yurak defibrillyatori</li>
+</ul>
+<div class="more">Kondensator ikkita metall plastinkadan iborat bo'lib, ular orasida izolyator (dielektrik) joylashgan. Zaryadlanganda bir plastinkada musbat, ikkinchisida manfiy zaryad to'planadi. Kondensatorlar kamera chaqnashida (flesh), kompyuter xotirasida, hatto yurak defibrillyatorlarida ham qo'llaniladi — ular energiyani tez to'plab, keyin bir zumda chiqarib bera oladi.</div>
+<div class="sim"><div class="sim-head"><strong>Kondensator zaryadlanishi</strong><span>Bosib zaryadlang</span></div><div class="sim-body">
+<canvas id="capCanvas" width="640" height="180"></canvas>
+<div class="chip-row" style="margin-top:10px"><button class="chip" id="chargeBtn">Zaryadlash</button><button class="chip" id="dischargeBtn">Razryad qilish</button></div>
+</div></div></section>
+
+<section><div class="num">9-mavzu</div><h2>Kondensatorlarni parallel va ketma-ket ulash</h2>
+<p class="lead">Kondensatorlar rezistorlarga <b>teskari</b> qoida bilan ulanadi: parallel ulanganda sig'imlar qo'shiladi (<span class="term v">C = C₁ + C₂</span>), ketma-ket ulanganda esa teskari qiymatlar qo'shiladi (<span class="term v">1/C = 1/C₁ + 1/C₂</span>).</p>
+<ul class="keypoints">
+  <li>Parallel ulashda plastinkalarning umumiy yuzasi kattalashadi — shuning uchun sig'im ortadi</li>
+  <li>Ketma-ket ulashda plastinkalar orasidagi masofa effektiv ravishda ortadi — shuning uchun sig'im kamayadi</li>
+  <li>Bu — kondensatorlarni rezistorlardan farqlovchi muhim xususiyat</li>
+</ul>
+<div class="more">Bu qoida rezistorlar qoidasining aynan teskarisi ekanini eslab qolish muhim: rezistorda ketma-ket ulash qarshilikni oshiradi, kondensatorda esa ketma-ket ulash sig'imni kamaytiradi. Buning sababi — parallel ulanganda plastinkalarning umumiy yuzasi kattalashadi (sig'im yuzaga bog'liq), ketma-ket ulanganda esa plastinkalar orasidagi masofa effektiv ravishda ortadi.</div>
+<div class="sim"><div class="sim-head"><strong>Sig'im kalkulyatori</strong><span>Ikkita kondensator</span></div><div class="sim-body">
+<div class="chip-row"><button class="chip active" data-ct="par">Parallel</button><button class="chip" data-ct="ser">Ketma-ket</button></div>
+<div class="calc-grid">
+  <div class="calc-field"><label>C₁ = <span class="val" id="c1Val">4</span> μF</label><input type="range" id="c1Slider" min="1" max="20" value="4"></div>
+  <div class="calc-field"><label>C₂ = <span class="val" id="c2Val">6</span> μF</label><input type="range" id="c2Slider" min="1" max="20" value="6"></div>
+</div>
+<div class="calc-result"><span class="f">C = <span id="cResult">10.0</span> μF</span></div>
+</div></div></section>
+
+<section><div class="num">Umumiy tekshiruv</div><h2>5 ta savol</h2>
+<div class="quiz-card"><p class="q">1. Om qonuni formulasi qanday?</p>
+<button class="opt" data-c="true">I = U / R</button><button class="opt" data-c="false">I = U · R</button><button class="opt" data-c="false">I = R / U</button></div>
+<div class="quiz-card"><p class="q">2. Ketma-ket ulanishda bitta element uzilsa, nima bo'ladi?</p>
+<button class="opt" data-c="true">Butun zanjir ishlamay qoladi</button><button class="opt" data-c="false">Faqat shu element o'chadi, qolgani ishlaydi</button><button class="opt" data-c="false">Hech narsa o'zgarmaydi</button></div>
+<div class="quiz-card"><p class="q">3. Parallel ulanishning afzalligi nima?</p>
+<button class="opt" data-c="true">Bitta element ishdan chiqsa, qolganlari ishlashda davom etadi</button><button class="opt" data-c="false">Kamroq sim talab qiladi</button><button class="opt" data-c="false">Hech qanday afzalligi yo'q</button></div>
+<div class="quiz-card"><p class="q">4. Kondensator nima vazifani bajaradi?</p>
+<button class="opt" data-c="true">Elektr zaryadini vaqtincha saqlaydi</button><button class="opt" data-c="false">Tok kuchini o'lchaydi</button><button class="opt" data-c="false">Issiqlik ishlab chiqaradi</button></div>
+<div class="quiz-card"><p class="q">5. Ikkita kondensatorni parallel ulasak, umumiy sig'im qanday topiladi?</p>
+<button class="opt" data-c="true">C = C₁ + C₂</button><button class="opt" data-c="false">1/C = 1/C₁ + 1/C₂</button><button class="opt" data-c="false">C = C₁ − C₂</button></div>
+</section>
+
+</div>
+<footer>8-sinf fizika · II chorak — Taqvim-mavzu reja asosida</footer>
+
+<script>
+// 1. Ohm calc
+const uSlider=document.getElementById('uSlider'), rSlider=document.getElementById('rSlider'), uVal=document.getElementById('uVal'), rVal=document.getElementById('rVal'), iResult=document.getElementById('iResult'), ohmDetail=document.getElementById('ohmDetail');
+function updateOhm(){
+  const U=parseInt(uSlider.value,10), R=parseInt(rSlider.value,10), I=U/R;
+  uVal.textContent=U; rVal.textContent=R; iResult.textContent=I.toFixed(2);
+  ohmDetail.innerHTML = `Agar kuchlanishni ${U} V, qarshilikni ${R} Ω desak, zanjirdan <b>${I.toFixed(2)} A</b> tok oqadi.`;
+}
+uSlider.oninput=updateOhm; rSlider.oninput=updateOhm; updateOhm();
+
+// 2. U-I graph
+const graphCanvas=document.getElementById('graphCanvas'), gctx=graphCanvas.getContext('2d');
+const gw=640, gh=280, pad=40; let pts=[];
+function drawGraph(){
+  gctx.clearRect(0,0,gw,gh);
+  gctx.strokeStyle='#363c5c'; gctx.lineWidth=1;
+  for(let i=0;i<=10;i++){ const x=pad+i*(gw-2*pad)/10; gctx.beginPath(); gctx.moveTo(x,pad); gctx.lineTo(x,gh-pad); gctx.stroke(); }
+  for(let j=0;j<=8;j++){ const y=pad+j*(gh-2*pad)/8; gctx.beginPath(); gctx.moveTo(pad,y); gctx.lineTo(gw-pad,y); gctx.stroke(); }
+  gctx.strokeStyle='#B9B6C8'; gctx.lineWidth=2;
+  gctx.beginPath(); gctx.moveTo(pad,gh-pad); gctx.lineTo(gw-pad,gh-pad); gctx.moveTo(pad,pad); gctx.lineTo(pad,gh-pad); gctx.stroke();
+  gctx.fillStyle='#B9B6C8'; gctx.font='12px Manrope'; gctx.fillText('U (V)', gw-pad-30, gh-pad+20);
+  gctx.save(); gctx.translate(16,pad+20); gctx.rotate(-Math.PI/2); gctx.fillText('I (A)',0,0); gctx.restore();
+  if(pts.length>1){ gctx.strokeStyle='#59D6C4'; gctx.lineWidth=2; gctx.beginPath(); pts.forEach((p,i)=>{ if(i===0) gctx.moveTo(p.x,p.y); else gctx.lineTo(p.x,p.y); }); gctx.stroke(); }
+  pts.forEach(p=>{ gctx.fillStyle='#F2A93B'; gctx.beginPath(); gctx.arc(p.x,p.y,5,0,Math.PI*2); gctx.fill(); });
+}
+graphCanvas.addEventListener('click', e=>{
+  const rect=graphCanvas.getBoundingClientRect(); const sx=gw/rect.width, sy=gh/rect.height;
+  const x=(e.clientX-rect.left)*sx, y=(e.clientY-rect.top)*sy;
+  if(x<pad||x>gw-pad||y<pad||y>gh-pad) return;
+  pts.push({x,y}); pts.sort((a,b)=>a.x-b.x); drawGraph();
+});
+document.getElementById('graphReset').onclick=()=>{ pts=[]; drawGraph(); };
+drawGraph();
+
+// 3. Rheostat bulb
+const rheoCanvas=document.getElementById('rheoCanvas'), rctx=rheoCanvas.getContext('2d'); const rheoSlider=document.getElementById('rheoSlider');
+function drawRheo(){
+  const w=640,h=160; rctx.clearRect(0,0,w,h);
+  const r = parseInt(rheoSlider.value,10);
+  const brightness = 1-(r/100);
+  const bulbX=500, bulbY=80;
+  rctx.strokeStyle='#B9B6C8'; rctx.lineWidth=3;
+  rctx.beginPath(); rctx.moveTo(40,bulbY); rctx.lineTo(140,bulbY); rctx.stroke();
+  rctx.strokeRect(140,bulbY-20,120,40);
+  rctx.fillStyle='#B9B6C8'; rctx.font='11px Manrope'; rctx.fillText('Reostat',160,bulbY-28);
+  rctx.beginPath(); rctx.moveTo(260,bulbY); rctx.lineTo(bulbX-24,bulbY); rctx.stroke();
+  const glow=Math.max(0.15,brightness);
+  rctx.fillStyle=`rgba(242,169,59,${glow})`; rctx.beginPath(); rctx.arc(bulbX,bulbY,24,0,Math.PI*2); rctx.fill();
+  if(glow>0.4){ rctx.strokeStyle=`rgba(242,169,59,${glow*0.5})`; for(let i=0;i<3;i++){ rctx.beginPath(); rctx.arc(bulbX,bulbY,28+i*7,0,Math.PI*2); rctx.stroke(); } }
+  rctx.fillStyle='#B9B6C8'; rctx.fillText('Chiroq', bulbX-18, bulbY+45);
+}
+rheoSlider.addEventListener('input', drawRheo); drawRheo();
+
+// 4. Series circuit
+const seriesCanvas=document.getElementById('seriesCanvas'), serctx=seriesCanvas.getContext('2d'); const seriesDetail=document.getElementById('seriesDetail');
+let seriesN=2;
+document.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{ document.querySelectorAll('[data-n]').forEach(x=>x.classList.remove('active')); b.classList.add('active'); seriesN=parseInt(b.dataset.n,10); drawSeries(); });
+function drawSeries(){
+  const w=640,h=150; serctx.clearRect(0,0,w,h);
+  const y=h/2, startX=40, endX=w-40;
+  serctx.strokeStyle='#B9B6C8'; serctx.lineWidth=3; serctx.beginPath(); serctx.moveTo(startX,y); serctx.lineTo(endX,y); serctx.stroke();
+  const step=(endX-startX)/(seriesN+1);
+  for(let i=1;i<=seriesN;i++){ const x=startX+step*i; serctx.strokeStyle='#F2A93B'; serctx.strokeRect(x-18,y-15,36,30); serctx.fillStyle='#F2A93B'; serctx.font='10px Manrope'; serctx.textAlign='center'; serctx.fillText('R'+i,x,y+5); }
+  serctx.textAlign='left';
+  seriesDetail.innerHTML = `${seriesN} ta bir xil 10 Ω rezistor ketma-ket ulanganda: R = ${Array(seriesN).fill('10').join(' + ')} = <b style="color:var(--teal)">${seriesN*10} Ω</b>`;
+}
+drawSeries();
+
+// 5. Parallel circuit
+const parallelCanvas=document.getElementById('parallelCanvas'), parctx=parallelCanvas.getContext('2d'); const parallelDetail=document.getElementById('parallelDetail');
+let parN=2;
+document.querySelectorAll('[data-pn]').forEach(b=>b.onclick=()=>{ document.querySelectorAll('[data-pn]').forEach(x=>x.classList.remove('active')); b.classList.add('active'); parN=parseInt(b.dataset.pn,10); drawParallel(); });
+function drawParallel(){
+  const w=640,h=180; parctx.clearRect(0,0,w,h);
+  const leftX=60, rightX=w-60;
+  parctx.strokeStyle='#B9B6C8'; parctx.lineWidth=3;
+  parctx.beginPath(); parctx.moveTo(leftX,20); parctx.lineTo(leftX,h-20); parctx.moveTo(rightX,20); parctx.lineTo(rightX,h-20); parctx.stroke();
+  const step=(h-40)/(parN+1);
+  for(let i=1;i<=parN;i++){ const y=20+step*i;
+    parctx.beginPath(); parctx.moveTo(leftX,y); parctx.lineTo(leftX+40,y); parctx.stroke();
+    parctx.strokeStyle='#59D6C4'; parctx.strokeRect(leftX+40,y-14,60,28);
+    parctx.fillStyle='#59D6C4'; parctx.font='10px Manrope'; parctx.textAlign='center'; parctx.fillText('R'+i,leftX+70,y+4);
+    parctx.strokeStyle='#B9B6C8'; parctx.beginPath(); parctx.moveTo(leftX+100,y); parctx.lineTo(rightX,y); parctx.stroke();
+  }
+  parctx.textAlign='left';
+  const rInv = parN/10; const rTotal = 1/rInv;
+  parallelDetail.innerHTML = `${parN} ta bir xil 10 Ω rezistor parallel ulanganda: 1/R = ${Array(parN).fill('1/10').join(' + ')} → R = <b style="color:var(--teal)">${rTotal.toFixed(1)} Ω</b>`;
+}
+drawParallel();
+
+// 6. Battery connection
+const battDetail = document.getElementById('battDetail');
+const battInfo = {
+  series: "Ikkita 1,5 V batareyani <b>ketma-ket</b> ulasak: umumiy kuchlanish U = 1,5 + 1,5 = <b style='color:var(--teal)'>3 V</b>. Ishlash muddati bitta batareyanikiday qoladi.",
+  parallel: "Ikkita 1,5 V batareyani <b>parallel</b> ulasak: umumiy kuchlanish 1,5 V bo'lib qoladi, lekin ishlash muddati (sig'imi) <b style='color:var(--teal)'>2 marta ortadi</b>.",
+};
+document.querySelectorAll('[data-bt]').forEach(b=>b.onclick=()=>{ document.querySelectorAll('[data-bt]').forEach(x=>x.classList.remove('active')); b.classList.add('active'); battDetail.innerHTML=battInfo[b.dataset.bt]; });
+battDetail.innerHTML = battInfo.series;
+
+// 8. Capacitor charge animation
+const capCanvas=document.getElementById('capCanvas'), capctx=capCanvas.getContext('2d');
+let capLevel=0, capTarget=0;
+function drawCap(){
+  const w=640,h=180; capctx.clearRect(0,0,w,h);
+  capLevel += (capTarget-capLevel)*0.05;
+  const cx=w/2, plateY1=40, plateY2=140, gap=50;
+  capctx.strokeStyle='#B9B6C8'; capctx.lineWidth=3;
+  capctx.beginPath(); capctx.moveTo(cx-gap,plateY1); capctx.lineTo(cx-gap,plateY2); capctx.stroke();
+  capctx.beginPath(); capctx.moveTo(cx+gap,plateY1); capctx.lineTo(cx+gap,plateY2); capctx.stroke();
+  const n = Math.round(capLevel*8);
+  for(let i=0;i<n;i++){ const y=plateY1+10+i*((plateY2-plateY1-20)/8);
+    capctx.fillStyle='#F2A93B'; capctx.font='14px Manrope'; capctx.fillText('+', cx-gap-14, y);
+    capctx.fillStyle='#59D6C4'; capctx.fillText('−', cx+gap+4, y);
+  }
+  capctx.fillStyle='#B9B6C8'; capctx.font='12px Manrope'; capctx.textAlign='center';
+  capctx.fillText('Zaryad darajasi: '+Math.round(capLevel*100)+'%', cx, 20);
+  capctx.textAlign='left';
+  requestAnimationFrame(drawCap);
+}
+document.getElementById('chargeBtn').onclick=()=>{ capTarget=1; };
+document.getElementById('dischargeBtn').onclick=()=>{ capTarget=0; };
+drawCap();
+
+// 9. Capacitance calc
+const c1Slider=document.getElementById('c1Slider'), c2Slider=document.getElementById('c2Slider'), c1Val=document.getElementById('c1Val'), c2Val=document.getElementById('c2Val'), cResult=document.getElementById('cResult');
+let capType='par';
+document.querySelectorAll('[data-ct]').forEach(b=>b.onclick=()=>{ document.querySelectorAll('[data-ct]').forEach(x=>x.classList.remove('active')); b.classList.add('active'); capType=b.dataset.ct; updateCap(); });
+function updateCap(){
+  const c1=parseInt(c1Slider.value,10), c2=parseInt(c2Slider.value,10);
+  c1Val.textContent=c1; c2Val.textContent=c2;
+  const c = capType==='par' ? c1+c2 : (c1*c2)/(c1+c2);
+  cResult.textContent = c.toFixed(1);
+}
+c1Slider.oninput=updateCap; c2Slider.oninput=updateCap; updateCap();
+
+// Quizzes
+document.querySelectorAll('.quiz-card').forEach(card=>{
+  const opts = card.querySelectorAll('.opt');
+  opts.forEach(opt=>{ opt.addEventListener('click', ()=>{ if(card.dataset.a) return; card.dataset.a='1';
+    opts.forEach(o=>{ if(o.dataset.c==='true') o.classList.add('correct'); else if(o===opt) o.classList.add('wrong'); }); }); });
+});
+</script>
+</body>
+</html>
